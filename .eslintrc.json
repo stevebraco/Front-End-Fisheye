@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "indent":  [2, 2, {"SwitchCase": 1}],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            "backtick"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-undef": "off"
+    }
+}
