@@ -32,7 +32,24 @@ function photographerFactory(data) {
 
     return article;
   }
-  return { name, picture, getUserCardDOM };
+
+  function getUserHeaderDOM() {
+    const model = `
+    <div class='photograph__info'>
+    <h2 class='photograph__name'>${data.name}</h2>
+    <span class='photograph__location'>${data.city}, ${data.country}</span>
+    <span class='photograph__tagline'>${data.tagline}</span>
+    </div>
+    <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+    <figure class='photograph__figure'>
+    <img class='photograph__img' src='/assets/photographers/${data.portrait}' />
+    </figure>
+    
+    `;
+    return createElement('div', ['photograph'], model, null);
+  }
+
+  return { name, picture, getUserCardDOM, getUserHeaderDOM };
 }
 
 export default photographerFactory;
