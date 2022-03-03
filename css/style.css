@@ -4,8 +4,16 @@ body {
   font-family: 'DM Sans', sans-serif;
   margin: 0;
 }
+.no-scroll {
+  overflow: hidden;
+}
 a {
   text-decoration: none;
+}
+
+button {
+  border: none;
+  background: transparent;
 }
 
 header {
@@ -19,6 +27,7 @@ header {
 h1 {
   color: #901c1c;
   margin-right: 100px;
+  font-size: 36px;
 }
 
 .logo {

@@ -16,26 +16,14 @@
         <img src="assets/images/logo.png" class="logo" />
       </a>
     </nav>
-    <h1>Nos photographes</h1>
+    <h1 tabindex="0">Nos photographes</h1>
   </header>
-  <main id="main">
-
+  <main id="main" aria-hidden="false">
+    <div class="photograph"></div>
+    <div class="form"></div>
   </main>
-  <div id="contact_modal">
-    <div class="modal">
-      <header>
-        <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" onclick="closeModal()" />
-      </header>
-      <form>
-        <div>
-          <label>Prénom</label>
-          <input />
-        </div>
-        <button class="contact_button">Envoyer</button>
-      </form>
-    </div>
-  </div>
+  <div aria-hidden="true" id="contact_modal" aria-label='image closeup view' class="modal-center" role="dialog"
+    aria-labelledby="dialog1_label"></div>
   <script type="module" src="/scripts/pages/photographer.js"></script>
   <script type="module" src="/scripts/pages/index.js"></script>
 </body>

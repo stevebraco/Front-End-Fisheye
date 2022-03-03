@@ -8,3 +8,5 @@ export const getPhotographers = async () => {
     console.log('oops', err);
   }
 };
+
+export const { photographers, media } = await getPhotographers();
