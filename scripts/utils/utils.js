@@ -40,6 +40,7 @@ export const incrementDecrement = (btn, mediaPhotographer, index) => {
   return copyData;
 };
 
+// Dropdown sort
 export const sortSelectForm = (value, mediaPhotographer) => {
   let copyData = [...mediaPhotographer];
   // sort by popularity
@@ -66,10 +67,11 @@ export const sortSelectForm = (value, mediaPhotographer) => {
   return copyData;
 };
 
+// When Dropdown Open (active)
 export const onActiveDropdown = () => {
   const dropdown = document.querySelector('.dropdown');
-  const body = document.querySelector('body');
-  dropdown.addEventListener('keydown', (e) => {
+
+  dropdown.addEventListener('keyup', (e) => {
     if (e.code === 'Enter') {
       dropdown.classList.toggle('active');
     }
@@ -80,6 +82,7 @@ export const onActiveDropdown = () => {
   });
 };
 
+// When modal open
 export const modalAriaOpen = (modal) => {
   const main = document.getElementById('main');
   const body = document.querySelector('body');
@@ -90,6 +93,7 @@ export const modalAriaOpen = (modal) => {
   modal.style.display = 'block';
 };
 
+// When modal close
 export const modalAriaClose = (modal) => {
   const main = document.getElementById('main');
   const body = document.querySelector('body');

@@ -143,6 +143,7 @@ html {
   border: none;
   background: none;
   cursor: pointer;
+  vertical-align: sub;
 }
 .btn-close {
   position: absolute;

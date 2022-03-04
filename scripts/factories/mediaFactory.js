@@ -104,7 +104,7 @@ const mediaFactory = (data) => {
       refreshGallery(indexGallery);
     };
 
-    const onSliderKeyDown = (event) => {
+    const onSliderKeyUp = (event) => {
       if (gallerySection.style.display) {
         switch (event.code) {
           case 'ArrowLeft':
@@ -151,7 +151,7 @@ const mediaFactory = (data) => {
       // Tap Keyboard
       gallery.addEventListener('keyup', (event) => {
         if (event.code === 'Enter') openMedia();
-        onSliderKeyDown(event);
+        onSliderKeyUp(event);
       });
     });
 

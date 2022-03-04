@@ -9,17 +9,22 @@ import {
 } from '../utils/utils.js';
 import { typeMediaGallery } from '../utils/elementLightbox.js';
 
+// Display dropdown
 const displayDropDownSelect = () => {
   const wrapperForm = document.querySelector('.form');
   const mediaModel = mediaFactory();
-  // Sort Gallery
+
+  // Dropdown model
   const getDropDownSelectDOM = mediaModel.getDropDownSelectDOM();
   wrapperForm.appendChild(getDropDownSelectDOM);
 };
 
+// Update gallery with dropdown
 const UpdateGalleryBySort = (value, mediaPhotographer, firstName, price) => {
+  // Data by sort
   const copyData = sortSelectForm(value, mediaPhotographer);
 
+  // clear gallery
   const mediaModel = mediaFactory();
   mediaModel.clearGallerySection();
 
@@ -36,11 +41,12 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
   const body = document.querySelector('body');
 
   optValue.forEach((value) => {
+    // to manage class select
     const isSelectedBySort = () => {
       textBox.value = value.innerText;
-      let current = document.getElementsByClassName('selected');
-      current[0].className = current[0].className.replace(' selected', '');
-      value.className += ' selected';
+      let current = document.getElementsByClassName('selected')[0];
+      current.classList.remove('selected');
+      value.classList.add('selected');
     };
 
     // Event
@@ -54,7 +60,7 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
       );
     });
 
-    value.addEventListener('keydown', (e) => {
+    value.addEventListener('keyup', (e) => {
       if (e.code === 'Enter') {
         textBox.value = e.target.innerText;
         isSelectedBySort();
@@ -68,12 +74,13 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
     });
   });
 
-  dropdown.addEventListener('keydown', (e) => {
+  dropdown.addEventListener('keyup', (e) => {
     if (e.code === 'ArrowDown') {
       dropdown.classList.add('active');
     }
   });
 
+  // When Dropdown Open (active)
   onActiveDropdown();
 };
 
@@ -87,6 +94,7 @@ const displayGalleryMedia = (mediaPhotographer, photographer) => {
   buttonLikes(mediaPhotographer, photographer.price);
 };
 
+// Button icon heart
 const buttonLikes = (mediaPhotographer, price) => {
   const btnLikes = document.querySelectorAll('.btn-likes');
   btnLikes.forEach((btn, index) => {
@@ -97,6 +105,7 @@ const buttonLikes = (mediaPhotographer, price) => {
   });
 };
 
+// Diplay total likes / price
 const displayLikeAndPriceDOM = (mediaPhotographer, pricePhotographer) => {
   const main = document.querySelector('main');
 
@@ -106,12 +115,11 @@ const displayLikeAndPriceDOM = (mediaPhotographer, pricePhotographer) => {
   main.appendChild(getLikeAndPriceDOM);
 };
 
+// Display Lightbox
 const displayLightBoxModal = (mediaPhotographer) => {
   const main = document.querySelector('main');
 
   const mediaModel = mediaFactory(mediaPhotographer);
-
-  // Display Lightbox
   const lightBoxDOM = mediaModel.getLightBoxModalDOM();
 
   main.appendChild(lightBoxDOM);

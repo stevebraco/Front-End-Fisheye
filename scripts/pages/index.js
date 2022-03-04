@@ -1,6 +1,5 @@
 import photographerFactory from '../factories/photographerFactory.js';
 import { photographers } from '../API/api.js';
-import { closeModal, displayModal } from '../utils/contactForm.js';
 import { modalAriaClose, modalAriaOpen } from '../utils/utils.js';
 
 async function displayData(photographers) {
@@ -18,12 +17,11 @@ async function displayData(photographers) {
       const containerPhotograph = document.querySelector('.photograph');
       const contactModal = document.querySelector('#contact_modal');
 
-      // Info user
+      // Info user model
       const userHeaderDOM = photographerModel.getUserHeaderDOM();
       containerPhotograph.innerHTML = userHeaderDOM;
 
       // Form contact modal
-      // Display Modal
       const modalContactFormDOM = photographerModel.getModalContactFormDOM();
       contactModal.innerHTML = modalContactFormDOM;
 

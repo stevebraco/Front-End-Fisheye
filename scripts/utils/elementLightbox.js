@@ -60,6 +60,7 @@ export const createBtnClose = (gallerySection) => {
   return btnClose;
 };
 
+// Type media
 export const typeMediaGallery = (mediaPhotographer, firstName) => {
   const gallerySection = document.querySelector('.gallery');
 
