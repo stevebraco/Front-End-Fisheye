@@ -16,7 +16,7 @@ function photographerFactory(data) {
     const pricePerDay = `${price}€/jour`;
     const model = `
         <a aria-label='En savoir plus sur ${name}' class='photographer__link' href='photographer.html?id=${id}'>
-          <img class='photographer__img' src=${picture} alt='portrait ${name}' />
+          <img class='photographer__img' src=${picture} alt='${name}' />
           <h2 class='photographer__name'>${name}</h2>
         </a>
         <p class='photographer__location'>${location}</p>

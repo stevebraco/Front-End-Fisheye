@@ -31,17 +31,32 @@ async function displayData(photographers) {
       const input = document.querySelectorAll('.modal__value');
 
       const modal = document.getElementById('contact_modal');
-      // Close modal
-      btnCloseModal.addEventListener('click', () => {
-        modalAriaClose(modal);
+
+      btnOpenModal.addEventListener('click', () => {
+        modalAriaOpen(modal);
       });
 
-      //Tap keyboard
-      btnCloseModal.addEventListener('keyup', (e) => {
+      btnOpenModal.addEventListener('keyup', (e) => {
+        if (e.code === 'Enter') {
+          btnCloseModal.focus();
+          modalAriaOpen(modal);
+        }
+      });
+
+      modal.addEventListener('keyup', (e) => {
         if (e.code === 'Escape') {
           modalAriaClose(modal);
           btnOpenModal.focus();
         }
+      });
+
+      form.addEventListener('keyup', (e) => {
+        console.log(e);
+      });
+
+      // Close modal
+      btnCloseModal.addEventListener('click', () => {
+        modalAriaClose(modal);
       });
 
       // Form data user
