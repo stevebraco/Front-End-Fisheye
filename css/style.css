@@ -16,23 +16,27 @@ button {
   background: transparent;
 }
 
+main {
+  padding: 0 5px;
+}
+
 header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 90px;
+  padding: 0 10px;
+  margin: 0 100px;
 }
 
 h1 {
   color: #901c1c;
-  margin-right: 100px;
   font-size: 36px;
 }
 
 .logo {
   height: 50px;
-  margin-left: 100px;
 }
 
 .photographer_section {
@@ -80,4 +84,20 @@ h1 {
 .photographer__price {
   color: #757575;
   font-size: 9px;
+}
+
+@media screen and (max-width: 800px) {
+  header {
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  .logo,
+  h1 {
+    margin: 0;
+  }
+
+  .photographer_section {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,6 +1,7 @@
 const modal = document.getElementById('contact_modal');
 const main = document.getElementById('main');
 const body = document.querySelector('body');
+const btnOpenModal = document.querySelector('.contact_button');
 
 // modal contact open
 export const displayModal = () => {

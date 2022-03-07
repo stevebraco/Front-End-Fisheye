@@ -452,6 +452,11 @@ textarea {
   transform: rotate(-225deg);
 }
 
+.dropdown__text {
+  font-weight: 700;
+  font-size: 18px;
+}
+
 .dropdown input {
   position: absolute;
   top: 0;
@@ -509,4 +514,40 @@ textarea {
 
 .option-value.selected {
   display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .photograph {
+    flex-direction: column;
+    height: 500px;
+    padding: 20px 0;
+    margin: 0;
+    margin-top: 25px;
+  }
+
+  .contact_button {
+    order: 2;
+  }
+
+  .photograph__info {
+    order: 2;
+  }
+
+  .dropdown-container {
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .gallery {
+    margin: 0;
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+    grid-gap: 1%;
+    padding-bottom: 50px;
+  }
+
+  .likes {
+    width: 200px;
+    height: 50px;
+    right: 0;
+  }
 }

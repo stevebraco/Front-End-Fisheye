@@ -41,19 +41,18 @@ export const incrementDecrement = (btn, mediaPhotographer, index) => {
 };
 
 // Dropdown sort
-export const sortSelectForm = (value, mediaPhotographer) => {
-  let copyData = [...mediaPhotographer];
+export const sortSelectForm = (optionText, mediaPhotographer) => {
   // sort by popularity
-  if (value === 'Popularité')
-    copyData = copyData.sort((a, b) => b.likes - a.likes);
+  if (optionText === 'Popularité')
+    mediaPhotographer.sort((a, b) => b.likes - a.likes);
 
   // sort by date
-  if (value === 'Date')
-    copyData = copyData.sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (optionText === 'Date')
+    mediaPhotographer.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   // sort by title
-  if (value === 'Titre') {
-    copyData = copyData.sort((a, b) => {
+  if (optionText === 'Titre') {
+    mediaPhotographer.sort((a, b) => {
       if (a.title < b.title) {
         return -1;
       }
@@ -64,10 +63,10 @@ export const sortSelectForm = (value, mediaPhotographer) => {
     });
   }
 
-  return copyData;
+  return mediaPhotographer;
 };
 
-// When Dropdown Open (active)
+// Dropdown Open (active)
 export const onActiveDropdown = () => {
   const dropdown = document.querySelector('.dropdown');
 
@@ -82,7 +81,7 @@ export const onActiveDropdown = () => {
   });
 };
 
-// When modal open
+// modal open
 export const modalAriaOpen = (modal) => {
   const main = document.getElementById('main');
   const body = document.querySelector('body');
@@ -93,7 +92,7 @@ export const modalAriaOpen = (modal) => {
   modal.style.display = 'block';
 };
 
-// When modal close
+// modal close
 export const modalAriaClose = (modal) => {
   const main = document.getElementById('main');
   const body = document.querySelector('body');

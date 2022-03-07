@@ -1,7 +1,7 @@
 import mediaFactory from '../factories/mediaFactory.js';
 import { createElement } from './utils.js';
 
-export const createGallerySection = () => {
+export const createLightboxModal = () => {
   const createGallery = createElement(
     'section',
     ['modal-lightbox', 'modal-center'],
@@ -13,22 +13,22 @@ export const createGallerySection = () => {
   return createGallery;
 };
 
-export const createContainerMedia = (gallerySection) => {
+export const createContainerMedia = (modalLightbox) => {
   const containerMedia = createElement(
     'div',
     ['modal-lightbox__container'],
     null,
-    gallerySection
+    modalLightbox
   );
   return containerMedia;
 };
 
-export const createBtnArrowRight = (gallerySection) => {
+export const createBtnArrowRight = (modalLightbox) => {
   const btnArrowRight = createElement(
     'button',
     ['btn-arrow', 'btn-arrow-prev'],
-    `<img src = 'assets/icons/arrowRight.svg'/>`,
-    gallerySection
+    `<img src = 'assets/icons/arrowRight.svg' alt='arrow right'/>`,
+    modalLightbox
   );
   btnArrowRight.setAttribute('aria-label', 'Next image');
   btnArrowRight.setAttribute('role', 'link');
@@ -36,24 +36,24 @@ export const createBtnArrowRight = (gallerySection) => {
   return btnArrowRight;
 };
 
-export const createBtnArrowLeft = (gallerySection) => {
+export const createBtnArrowLeft = (modalLightbox) => {
   const btnArrowLeft = createElement(
     'button',
     ['btn-arrow', 'btn-arrow-next'],
-    `<img src = 'assets/icons/arrowLeft.svg'/>`,
-    gallerySection
+    `<img src = 'assets/icons/arrowLeft.svg' alt='arrow left'/>`,
+    modalLightbox
   );
   btnArrowLeft.setAttribute('aria-label', 'Previous image');
   btnArrowLeft.setAttribute('role', 'link');
   return btnArrowLeft;
 };
 
-export const createBtnClose = (gallerySection) => {
+export const createBtnClose = (modalLightbox) => {
   const btnClose = createElement(
     'button',
     ['btn-arrow', 'btn-close'],
-    `<img src = 'assets/icons/closeBrown.svg'/>`,
-    gallerySection
+    `<img src = 'assets/icons/closeBrown.svg' alt='close'/>`,
+    modalLightbox
   );
   btnClose.setAttribute('aria-label', 'Close dialog');
 

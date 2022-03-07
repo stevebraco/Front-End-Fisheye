@@ -31,14 +31,6 @@ async function displayData(photographers) {
       const input = document.querySelectorAll('.modal__value');
 
       const modal = document.getElementById('contact_modal');
-
-      // Open modal
-      btnOpenModal.addEventListener('click', () => {
-        // displayModal();
-        modalAriaOpen(modal);
-        btnCloseModal.focus();
-      });
-
       // Close modal
       btnCloseModal.addEventListener('click', () => {
         modalAriaClose(modal);

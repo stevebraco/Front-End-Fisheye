@@ -20,36 +20,46 @@ const displayDropDownSelect = () => {
 };
 
 // Update gallery with dropdown
-const UpdateGalleryBySort = (value, mediaPhotographer, firstName, price) => {
-  // Data by sort
-  const copyData = sortSelectForm(value, mediaPhotographer);
+const UpdateGalleryBySort = (
+  optionText,
+  mediaPhotographer,
+  firstName,
+  price
+) => {
+  // mediaPhotographer by sort
+  const sortMediaPhotographer = sortSelectForm(optionText, mediaPhotographer);
 
   // clear gallery
   const mediaModel = mediaFactory();
   mediaModel.clearGallerySection();
 
-  typeMediaGallery(copyData, firstName);
-  displayLightBoxModal(copyData);
-  buttonLikes(copyData, price);
+  // update type media
+  typeMediaGallery(sortMediaPhotographer, firstName);
+
+  // update lightbox
+  displayLightBoxModal(sortMediaPhotographer);
+
+  //update button
+  buttonLikes(sortMediaPhotographer, price);
 };
 
-const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
+const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
   const optValue = document.querySelectorAll('.option-value');
-  const textBox = document.querySelector('.textBox');
+  const input = document.querySelector('.textBox');
   const firstName = findPhotographWithID.name.split(' ')[0];
   const dropdown = document.querySelector('.dropdown');
   const body = document.querySelector('body');
 
   optValue.forEach((value) => {
-    // to manage class select
+    // manipulation class select
     const isSelectedBySort = () => {
-      textBox.value = value.innerText;
+      input.value = value.innerText;
       let current = document.getElementsByClassName('selected')[0];
       current.classList.remove('selected');
       value.classList.add('selected');
     };
 
-    // Event
+    // Event click
     value.addEventListener('click', () => {
       isSelectedBySort();
       UpdateGalleryBySort(
@@ -60,9 +70,10 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
       );
     });
 
+    // Event keyboard update on keyboard
     value.addEventListener('keyup', (e) => {
       if (e.code === 'Enter') {
-        textBox.value = e.target.innerText;
+        input.value = e.target.innerText;
         isSelectedBySort();
         UpdateGalleryBySort(
           e.target.innerText,
@@ -70,13 +81,30 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
           firstName,
           findPhotographWithID.price
         );
+
+        body.classList.remove('no-scroll');
       }
     });
   });
-
+  // Event keyboard
+  let index = 0;
   dropdown.addEventListener('keyup', (e) => {
-    if (e.code === 'ArrowDown') {
-      dropdown.classList.add('active');
+    if (!dropdown.classList.contains('active')) {
+      if (e.code === 'ArrowDown') {
+        dropdown.classList.add('active');
+      }
+    } else {
+      if (e.code === 'ArrowDown') {
+        body.classList.add('no-scroll');
+        const optValue = document.querySelectorAll(
+          '.option-value:not(.selected)'
+        );
+
+        optValue[index++].focus();
+        if (index === 2) {
+          index = 0;
+        }
+      }
     }
   });
 
@@ -84,14 +112,20 @@ const UpdateDisplaySortDOM = (mediaPhotographer, findPhotographWithID) => {
   onActiveDropdown();
 };
 
+// Gallery media photographer
+// First render
 const displayGalleryMedia = (mediaPhotographer, photographer) => {
+  let current = document.getElementsByClassName('selected')[0];
   const firstName = photographer.name.split(' ')[0];
   const main = document.querySelector('main');
   createElement('section', ['gallery'], null, main);
 
-  typeMediaGallery(mediaPhotographer, firstName);
-
-  buttonLikes(mediaPhotographer, photographer.price);
+  UpdateGalleryBySort(
+    current.innerText,
+    mediaPhotographer,
+    firstName,
+    photographer.price
+  );
 };
 
 // Button icon heart
@@ -138,11 +172,13 @@ const init = async () => {
   // photograph's media
   const mediaPhotographer = media.filter((media) => media.photographerId == id);
 
+  document.title = `Photographer ${findPhotographWithID.name}`;
+
   displayDropDownSelect();
   displayGalleryMedia(mediaPhotographer, findPhotographWithID);
   displayLikeAndPriceDOM(mediaPhotographer, findPhotographWithID.price);
   displayLightBoxModal(mediaPhotographer);
-  UpdateDisplaySortDOM(mediaPhotographer, findPhotographWithID);
+  UpdateDisplayDropdown(mediaPhotographer, findPhotographWithID);
 };
 
 init();

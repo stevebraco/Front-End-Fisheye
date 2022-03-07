@@ -3,7 +3,7 @@ import {
   createBtnArrowRight,
   createBtnClose,
   createContainerMedia,
-  createGallerySection,
+  createLightboxModal,
 } from '../utils/elementLightbox.js';
 import {
   createElement,
@@ -12,11 +12,12 @@ import {
 } from '../utils/utils.js';
 
 const mediaFactory = (data) => {
+  // Select Dropdown
   const getDropDownSelectDOM = () => {
     const filterForm = `
-    <span>Trier par</span>
+    <h3 class='dropdown__text'>Trier par</h3>
     <div class="dropdown" tabindex='0'>
-    <input class="textBox" type="button" value='Popularité' placeholder="dropMenu" readonly aria-labelledby="sort by" />
+    <input tabindex='-1' class="textBox" type="button" value='Popularité' placeholder="dropMenu" readonly aria-labelledby="sort by" />
     <div class="option" role='listbox' aria-label='select by sort'>
     <div class="option-value selected" tabindex='0' role='option'>Popularité</div>
     <div class="option-value" tabindex='0' role='option'>Date</div>
@@ -27,6 +28,7 @@ const mediaFactory = (data) => {
     return createElement('div', ['dropdown-container'], filterForm, null);
   };
 
+  // image gallery
   const getPhotosGalleriesDOM = (name) => {
     const model = `
     <figure class='gallery__figure'>
@@ -35,7 +37,7 @@ const mediaFactory = (data) => {
     <div class='gallery__content'>
     <h3 class='gallery__title'>${data.title}</h3>
     <div>
-    <span aria-label='likes' class='gallery__likes'>${data.likes}</span> <button class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg'/></button>  
+    <span aria-label='likes' class='gallery__likes'>${data.likes}</span> <button label='likes' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>  
     </div>
     </div>
     `;
@@ -43,6 +45,7 @@ const mediaFactory = (data) => {
     return createElement('article', ['gallery__container'], model, null);
   };
 
+  // video gallery
   const getVideoGalleriesDOM = (name) => {
     return createElement(
       'article',
@@ -55,7 +58,7 @@ const mediaFactory = (data) => {
     <div class='gallery__content'>
     <h3 class='gallery__title'>${data.title}</h3>
     <div>
-    <span role='text' class='gallery__likes'>${data.likes} </span> <button class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>  
+    <span role='text' class='gallery__likes'>${data.likes} </span> <button label='likes' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>  
     </div>
     </div>
       `,
@@ -70,7 +73,7 @@ const mediaFactory = (data) => {
       0
     );
     const model = `
-     <span class='likes__total'>${totalLikes} <img src='assets/icons/heart.svg' /> </span>
+     <span class='likes__total'>${totalLikes} <img src='assets/icons/heart.svg' alt='heart' /> </span>
      <span class='likes__price'>${price}€ /jour</span>
       `;
 
@@ -81,19 +84,20 @@ const mediaFactory = (data) => {
   const getLightBoxModalDOM = () => {
     const galleries = document.querySelectorAll('.gallery__media');
 
-    const gallerySection = createGallerySection();
-    const containerMedia = createContainerMedia(gallerySection);
+    const lightboxModal = createLightboxModal();
+    const containerMedia = createContainerMedia(lightboxModal);
 
-    const btnArrowRight = createBtnArrowRight(gallerySection);
-    const btnArrowLeft = createBtnArrowLeft(gallerySection);
-    const btnClose = createBtnClose(gallerySection);
+    // Create button
+    const btnArrowRight = createBtnArrowRight(lightboxModal);
+    const btnArrowLeft = createBtnArrowLeft(lightboxModal);
+    const btnClose = createBtnClose(lightboxModal);
 
     const buttonRight = () => {
       ++indexGallery;
       if (indexGallery == galleries.length) {
         indexGallery = 0;
       }
-      refreshGallery(indexGallery);
+      displayTypeGallery(indexGallery);
     };
 
     const buttonLeft = () => {
@@ -101,11 +105,11 @@ const mediaFactory = (data) => {
       if (indexGallery < 0) {
         indexGallery = galleries.length - 1;
       }
-      refreshGallery(indexGallery);
+      displayTypeGallery(indexGallery);
     };
 
     const onSliderKeyUp = (event) => {
-      if (gallerySection.style.display) {
+      if (lightboxModal.style.display) {
         switch (event.code) {
           case 'ArrowLeft':
             buttonLeft();
@@ -116,7 +120,7 @@ const mediaFactory = (data) => {
             break;
 
           case 'Escape':
-            modalAriaClose(gallerySection);
+            modalAriaClose(lightboxModal);
             break;
         }
       }
@@ -125,43 +129,49 @@ const mediaFactory = (data) => {
     // index Media
     let indexGallery;
 
-    const refreshGallery = (indexGallery) => {
-      if (galleries[indexGallery]?.tagName === 'IMG') {
+    const displayTypeGallery = (indexGallery) => {
+      // Find img
+      if (galleries[indexGallery].tagName === 'IMG') {
         const model = `
         <img class='modal-lightbox__img' src=${galleries[indexGallery].src} alt='${data[indexGallery].title}' />
         <h3 class='modal-lightbox__title'>${data[indexGallery].title}</h3>
         `;
         containerMedia.innerHTML = model;
       } else {
-        const model = `<video class='modal-lightbox__img' controls = true src=${galleries[indexGallery]?.currentSrc}>`;
+        // find video
+        const model = `
+        <video class='modal-lightbox__img' controls = true src=${galleries[indexGallery]?.currentSrc}> </video>
+        <h3 class='modal-lightbox__title'>${data[indexGallery].title}</h3>
+        `;
         containerMedia.innerHTML = model;
       }
     };
 
     // Event
     galleries.forEach((gallery, index) => {
-      const openMedia = () => {
+      const openLightboxModal = () => {
         indexGallery = index;
-        refreshGallery(indexGallery);
-        modalAriaOpen(gallerySection);
+        displayTypeGallery(indexGallery);
+        modalAriaOpen(lightboxModal);
       };
       // Click Image
-      gallery.addEventListener('click', openMedia);
+      gallery.addEventListener('click', openLightboxModal);
 
       // Tap Keyboard
       gallery.addEventListener('keyup', (event) => {
-        if (event.code === 'Enter') openMedia();
+        if (event.code === 'Enter') openLightboxModal();
         onSliderKeyUp(event);
       });
     });
 
     // Close Modal
-    btnClose.addEventListener('click', () => modalAriaClose(gallerySection));
+    btnClose.addEventListener('click', () => modalAriaClose(lightboxModal));
 
+    // direction
     btnArrowLeft.addEventListener('click', buttonLeft);
     btnArrowRight.addEventListener('click', buttonRight);
 
-    return gallerySection;
+    return lightboxModal;
   };
 
   // Clear Gallery

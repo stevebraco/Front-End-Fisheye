@@ -1,9 +1,5 @@
 import { createElement } from '../utils/utils.js';
 function photographerFactory(data) {
-  const { name, portrait } = data;
-
-  const picture = `assets/photographers/${portrait}`;
-
   function getUserCardDOM() {
     const {
       id,
@@ -23,9 +19,9 @@ function photographerFactory(data) {
           <img class='photographer__img' src=${picture} alt='portrait ${name}' />
           <h2 class='photographer__name'>${name}</h2>
         </a>
-        <span class='photographer__location'>${location}</span>
-        <span class='photographer__description'>${description}</span>
-        <span class='photographer__price'>${pricePerDay}</span>
+        <p class='photographer__location'>${location}</p>
+        <p class='photographer__description'>${description}</p>
+        <p class='photographer__price'>${pricePerDay}</p>
         `;
 
     const article = createElement('article', ['photographer'], model, null);
@@ -37,12 +33,12 @@ function photographerFactory(data) {
     const model = `
     <div tabindex='0' class='photograph__info'>
     <h2 id="dialog1_label" class='photograph__name'>${data.name}</h2>
-    <span class='photograph__location'>${data.city}, ${data.country}</span>
-    <span class='photograph__tagline'>${data.tagline}</span>
+    <p class='photograph__location'>${data.city}, ${data.country}</p>
+    <p class='photograph__tagline'>${data.tagline}</p>
     </div>
     <button class="btn contact_button" aria-label='contactez moi'>Contactez-moi</button>
     <figure tabindex='0' class='photograph__figure'>
-    <img class='photograph__img' src='/assets/photographers/${data.portrait}' />
+    <img class='photograph__img' src='/assets/photographers/${data.portrait}' alt='photographer ${data.portrait}' />
     </figure>
     `;
 
@@ -52,9 +48,9 @@ function photographerFactory(data) {
   function getModalContactFormDOM() {
     const model = `<div class="modal">
     <header>
-      <h2>Contactez-moi <span class='modal__line'> ${data.name}</span></h2>
+      <h2>Contactez-moi <p class='modal__line'> ${data.name}</p></h2>
       <button aria-label='Close Contact form' class='modal__close'>
-      <img  src="assets/icons/close.svg" />
+      <img  src="assets/icons/close.svg" alt='close'/>
       </button>
     </header>
     <form>
@@ -74,7 +70,7 @@ function photographerFactory(data) {
         <label class='modal__label' for='message'>Votre message</label>
         <textarea id='message' class='modal__textarea modal__value'></textarea>
       </div>
-      <button id='btn-submit' class="btn" aria-label='Send'>Envoyer</button>
+      <button type='submit' id='btn-submit' class="btn" aria-label='Send'>Envoyer</button>
     </form>
   </div>`;
 
