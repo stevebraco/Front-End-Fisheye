@@ -32,14 +32,12 @@ const mediaFactory = (data) => {
   const getPhotosGalleriesDOM = (name) => {
     const model = `
     <figure class='gallery__figure'>
-    <img tabindex='0' class='gallery__media' src='/assets/images/${name}/${data.image}' alt='${data.title}, closeup view' />
+      <img tabindex='0' class='gallery__media' src='/assets/images/${name}/${data.image}' alt='${data.title}, closeup view' />
     </figure>
     <div class='gallery__content'>
-    <h3 class='gallery__title'>${data.title}</h3>
+      <h3 class='gallery__title'>${data.title}</h3>
     <div>
-    <span aria-label='likes' class='gallery__likes'>${data.likes}</span> <button label='likes' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>  
-    </div>
-    </div>
+    <span aria-label='likes' class='gallery__likes'>${data.likes}</span> <button label='like' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>
     `;
 
     return createElement('article', ['gallery__container'], model, null);
@@ -58,9 +56,7 @@ const mediaFactory = (data) => {
     <div class='gallery__content'>
     <h3 class='gallery__title'>${data.title}</h3>
     <div>
-    <span role='text' class='gallery__likes'>${data.likes} </span> <button label='likes' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>  
-    </div>
-    </div>
+    <span role='text' class='gallery__likes'>${data.likes} </span> <button label='like' class='btn-arrow btn-likes'><img src='assets/icons/heartBrown.svg' alt='likes' /></button>
       `,
       null
     );
@@ -73,11 +69,14 @@ const mediaFactory = (data) => {
       0
     );
     const model = `
-     <span class='likes__total'>${totalLikes} <img src='assets/icons/heart.svg' alt='heart' /> </span>
-     <span class='likes__price'>${price}€ /jour</span>
+    <div>
+    <span tabindex='0' class='likes__total'>${totalLikes} </span>
+    <img src='assets/icons/heart.svg' alt='heart' /> 
+    </div>
+     <span tabindex='0' class='likes__price'>${price}€ /jour</span>
       `;
 
-    return createElement('div', ['likes'], model, null);
+    return createElement('aside', ['likes'], model, null);
   };
 
   // Display Lightbox

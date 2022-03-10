@@ -18,6 +18,7 @@ button {
 
 main {
   padding: 0 5px;
+  margin: 0 50px;
 }
 
 header {
@@ -63,9 +64,11 @@ h1 {
 }
 
 .photographer__img {
-  height: 200px;
-  width: 200px;
   border-radius: 50%;
+  height: 200px;
+  max-width: 200px;
+  min-width: 200px;
+  object-fit: cover;
 }
 
 .photographer__location {
@@ -86,10 +89,24 @@ h1 {
   font-size: 9px;
 }
 
+@media screen and (max-width: 990px) {
+  main {
+    margin: 0 5px;
+    padding-bottom: 40rem;
+  }
+
+  .photographer_section {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+  }
+}
 @media screen and (max-width: 800px) {
+  main {
+    padding-bottom: 20rem;
+  }
   header {
     flex-direction: column;
     padding-top: 20px;
+    margin: 0;
   }
 
   .logo,
@@ -98,6 +115,12 @@ h1 {
   }
 
   .photographer_section {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, minmax(0px, 1fr));
+  }
+
+  .likes {
+    left: 0;
+    right: 0;
+    margin: auto;
   }
 }

@@ -65,7 +65,14 @@ async function displayData(photographers) {
         input.forEach((element) => {
           console.log(`${element.parentElement.innerText}: ${element.value}`);
         });
-        modalAriaClose(modal);
+      });
+
+      // Form data user
+      form.addEventListener('keyup', (e) => {
+        if (e.code === 'Enter') {
+          modalAriaClose(modal);
+          btnOpenModal.focus();
+        }
       });
     } else {
       // index.html

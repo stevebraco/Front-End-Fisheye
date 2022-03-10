@@ -83,6 +83,7 @@ const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
         );
 
         body.classList.remove('no-scroll');
+        dropdown.focus();
       }
     });
   });
@@ -90,7 +91,11 @@ const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
   let index = 0;
   dropdown.addEventListener('keyup', (e) => {
     if (!dropdown.classList.contains('active')) {
+      if (e.code === 'Enter') {
+        body.classList.add('no-scroll');
+      }
       if (e.code === 'ArrowDown') {
+        body.classList.add('no-scroll');
         dropdown.classList.add('active');
       }
     } else {
@@ -131,10 +136,17 @@ const displayGalleryMedia = (mediaPhotographer, photographer) => {
 // Button icon heart
 const buttonLikes = (mediaPhotographer, price) => {
   const btnLikes = document.querySelectorAll('.btn-likes');
+  const likes = document.querySelector('.likes__total');
+
   btnLikes.forEach((btn, index) => {
     btn.addEventListener('click', () => {
       const data = incrementDecrement(btn, mediaPhotographer, index);
-      displayLikeAndPriceDOM(data, price);
+
+      const totalLikes = data.reduce(
+        (prevValue, currentValue) => prevValue + currentValue.likes,
+        0
+      );
+      likes.textContent = totalLikes;
     });
   });
 };
@@ -174,9 +186,9 @@ const init = async () => {
 
   document.title = `Photographer ${findPhotographWithID.name}`;
 
+  displayLikeAndPriceDOM(mediaPhotographer, findPhotographWithID.price);
   displayDropDownSelect();
   displayGalleryMedia(mediaPhotographer, findPhotographWithID);
-  displayLikeAndPriceDOM(mediaPhotographer, findPhotographWithID.price);
   displayLightBoxModal(mediaPhotographer);
   UpdateDisplayDropdown(mediaPhotographer, findPhotographWithID);
 };

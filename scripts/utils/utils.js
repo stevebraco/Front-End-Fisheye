@@ -15,28 +15,29 @@ export const createElement = (
 // Increment Decrement gallery heart
 export const incrementDecrement = (btn, mediaPhotographer, index) => {
   const likes = document.querySelectorAll('.gallery__likes');
+  const btnLikes = document.querySelectorAll('.btn-likes');
 
   let copyData = mediaPhotographer;
 
-  btn.classList.toggle('like');
-
-  if (btn.classList.contains('like')) {
-    // render
+  if (!copyData[index].isLike) {
     likes[index].textContent = copyData[index].likes + 1;
+    btnLikes[index].setAttribute('label', 'like');
 
     copyData[index] = {
       ...copyData[index],
       likes: copyData[index].likes + 1,
+      isLike: true,
     };
   } else {
+    likes[index].textContent = copyData[index].likes - 1;
+    btnLikes[index].setAttribute('label', 'unlike');
+
     copyData[index] = {
       ...copyData[index],
       likes: copyData[index].likes - 1,
+      isLike: false,
     };
-    // render
-    likes[index].textContent = copyData[index].likes;
   }
-
   return copyData;
 };
 
