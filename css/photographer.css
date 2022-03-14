@@ -86,7 +86,6 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article,
 aside,
 details,
@@ -127,15 +126,28 @@ html {
   box-sizing: border-box;
 }
 
+*:focus {
+  border: 3px solid #901c1c;
+  outline: 0;
+}
+
+.btn-likes:focus {
+  border: 3px solid #901c1c;
+  outline: 0;
+}
+
 #contact_modal {
   display: none;
   background: #fafafa;
 }
 
 .contact_button:hover,
-.contact_button:focus {
+.contact_button:focus,
+#btn-submit:hover,
+#btn-submit:focus {
   background: #db8876;
   color: #000000;
+  border: 3px solid #901c1c;
 }
 
 /* BUTTON */
@@ -313,7 +325,11 @@ textarea {
   object-fit: cover;
   border-radius: 5px;
 }
-
+/* .gallery__media:focus {
+  border: 3px solid #901c1c;
+  outline: 0;
+  padding: 2px;
+} */
 .gallery__content {
   display: flex;
   align-items: center;
@@ -477,7 +493,7 @@ textarea {
 }
 
 .dropdown:focus input {
-  border: 1px solid #005fcc;
+  border: 1px solid #901c1c;
 }
 
 .dropdown .option {

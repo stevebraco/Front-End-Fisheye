@@ -189,7 +189,7 @@ const init = async () => {
   displayLikeAndPriceDOM(mediaPhotographer, findPhotographWithID.price);
   displayDropDownSelect();
   displayGalleryMedia(mediaPhotographer, findPhotographWithID);
-  displayLightBoxModal(mediaPhotographer);
+  // displayLightBoxModal(mediaPhotographer);
   UpdateDisplayDropdown(mediaPhotographer, findPhotographWithID);
 };
 

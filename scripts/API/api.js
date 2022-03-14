@@ -5,7 +5,7 @@ export const getPhotographers = async () => {
 
     return data;
   } catch (error) {
-    console.log('oops', err);
+    console.log(error);
   }
 };
 

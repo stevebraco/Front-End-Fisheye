@@ -32,7 +32,7 @@ function photographerFactory(data) {
   function getUserHeaderDOM() {
     const model = `
     <div tabindex='0' class='photograph__info'>
-    <h2 id="dialog1_label" class='photograph__name'>${data.name}</h2>
+    <h2  class='photograph__name'>${data.name}</h2>
     <p class='photograph__location'>${data.city}, ${data.country}</p>
     <p class='photograph__tagline'>${data.tagline}</p>
     </div>
@@ -48,7 +48,7 @@ function photographerFactory(data) {
   function getModalContactFormDOM() {
     const model = `<div class="modal">
     <header>
-      <h2>Contactez-moi <p class='modal__line'> ${data.name}</p></h2>
+      <h2 id="dialog1_label" >Contactez-moi <p class='modal__line'> ${data.name}</p></h2>
       <button aria-label='Close Contact form' class='modal__close'>
       <img  src="assets/icons/close.svg" alt='close'/>
       </button>
