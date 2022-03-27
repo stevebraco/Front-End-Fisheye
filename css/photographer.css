@@ -131,7 +131,8 @@ html {
   outline: 0;
 }
 
-.btn-likes:focus {
+.btn-likes:focus,
+.btn-arrow:focus {
   border: 3px solid #901c1c;
   outline: 0;
 }

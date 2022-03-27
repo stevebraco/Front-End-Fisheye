@@ -16,9 +16,9 @@ const mediaFactory = (data) => {
   const getDropDownSelectDOM = () => {
     const filterForm = `
     <h3 class='dropdown__text'>Trier par</h3>
-    <div class="dropdown" tabindex='0'>
-    <input tabindex='-1' class="textBox" type="button" value='Popularité' placeholder="dropMenu" readonly aria-labelledby="sort by" />
-    <div class="option" role='listbox' aria-label='select by sort'>
+    <div role="listbox" class="dropdown" tabindex='0' aria-haspopup='listbox' role='button' aria-label='trier par' aria-expanded='false'>
+    <input tabindex='-1' class="textBox" type="button" value='Popularité' placeholder="dropMenu" readonly />
+    <div class="option" id='sort' role='listbox' >
     <div class="option-value selected" tabindex='0' role='option'>Popularité</div>
     <div class="option-value" tabindex='0' role='option'>Date</div>
     <div class="option-value" tabindex='0' role='option'>Titre</div>
@@ -32,7 +32,7 @@ const mediaFactory = (data) => {
   const getPhotosGalleriesDOM = (name) => {
     const model = `
     <figure class='gallery__figure'>
-      <img tabindex='0' class='gallery__media' src='/assets/images/${name}/${data.image}' alt='${data.title}, closeup view' />
+      <img tabindex='0' class='gallery__media' src='/assets/images/${name}/${data.image}' alt='${data.title}' />
     </figure>
     <div class='gallery__content'>
       <h3 class='gallery__title'>${data.title}</h3>
@@ -69,9 +69,9 @@ const mediaFactory = (data) => {
       0
     );
     const model = `
-    <div>
-    <span tabindex='0' class='likes__total'>${totalLikes} </span>
-    <img src='assets/icons/heart.svg' alt='heart' /> 
+    <div tabindex='0'>
+    <span  class='likes__total'>${totalLikes} </span>
+    <img src='assets/icons/heart.svg' alt='aime' /> 
     </div>
      <span tabindex='0' class='likes__price'>${price}€ /jour</span>
       `;
@@ -87,9 +87,38 @@ const mediaFactory = (data) => {
     const containerMedia = createContainerMedia(lightboxModal);
 
     // Create button
+    const btnClose = createBtnClose(lightboxModal);
     const btnArrowRight = createBtnArrowRight(lightboxModal);
     const btnArrowLeft = createBtnArrowLeft(lightboxModal);
-    const btnClose = createBtnClose(lightboxModal);
+
+    // index Media
+    let indexGallery;
+
+    // focus image clicked
+    let imageFocus;
+
+    // Event
+    galleries.forEach((gallery, index) => {
+      // Open Lightbox
+      const openLightboxModal = () => {
+        indexGallery = index;
+        displayTypeGallery(indexGallery);
+        modalAriaOpen(lightboxModal);
+        imageFocus = galleries[index];
+      };
+
+      // Click Image
+      gallery.addEventListener('click', openLightboxModal);
+
+      // Tap Keyboard Image
+      gallery.addEventListener('keyup', (event) => {
+        if (event.code === 'Enter') {
+          openLightboxModal();
+          btnArrowRight.focus();
+        }
+        onSliderKeyUp(event);
+      });
+    });
 
     const buttonRight = () => {
       ++indexGallery;
@@ -108,25 +137,21 @@ const mediaFactory = (data) => {
     };
 
     const onSliderKeyUp = (event) => {
-      if (lightboxModal.style.display) {
-        switch (event.code) {
-          case 'ArrowLeft':
-            buttonLeft();
-            break;
+      switch (event.code) {
+        case 'ArrowLeft':
+          buttonLeft();
+          break;
 
-          case 'ArrowRight':
-            buttonRight();
-            break;
+        case 'ArrowRight':
+          buttonRight();
+          break;
 
-          case 'Escape':
-            modalAriaClose(lightboxModal);
-            break;
-        }
+        case 'Escape':
+          modalAriaClose(lightboxModal);
+          imageFocus.focus();
+          break;
       }
     };
-
-    // index Media
-    let indexGallery;
 
     const displayTypeGallery = (indexGallery) => {
       // Find img
@@ -146,27 +171,22 @@ const mediaFactory = (data) => {
       }
     };
 
-    // Event
-    galleries.forEach((gallery, index) => {
-      const openLightboxModal = () => {
-        indexGallery = index;
-        displayTypeGallery(indexGallery);
-        modalAriaOpen(lightboxModal);
-      };
-      // Click Image
-      gallery.addEventListener('click', openLightboxModal);
-
-      // Tap Keyboard
-      gallery.addEventListener('keyup', (event) => {
-        if (event.code === 'Enter') openLightboxModal();
-        onSliderKeyUp(event);
-      });
+    // Close Modal keyboard
+    lightboxModal.addEventListener('keyup', (event) => {
+      if (event.code === 'Escape') {
+        modalAriaClose(lightboxModal);
+        imageFocus.focus();
+      }
+      onSliderKeyUp(event);
     });
 
-    // Close Modal
-    btnClose.addEventListener('click', () => modalAriaClose(lightboxModal));
+    // Button Close Modal
+    btnClose.addEventListener('click', () => {
+      modalAriaClose(lightboxModal);
+      imageFocus.focus();
+    });
 
-    // direction
+    // Button direction
     btnArrowLeft.addEventListener('click', buttonLeft);
     btnArrowRight.addEventListener('click', buttonRight);
 

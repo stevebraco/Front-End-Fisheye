@@ -18,7 +18,7 @@ button {
 }
 
 main {
-  padding: 0 5px;
+  padding: 0 5px 15rem;
   margin: 0 50px;
 }
 
@@ -56,6 +56,8 @@ h1 {
 
 .photographer__link {
   text-align: center;
+  width: 100%;
+  padding-top: 15px;
 }
 
 .photographer__name {

@@ -1,3 +1,9 @@
+export const fetchIdUrl = () => {
+  // Fetch id Url
+  let params = new URL(document.location).searchParams;
+  return parseInt(params.get('id'));
+};
+
 export const createElement = (
   tagName,
   className,
@@ -13,32 +19,43 @@ export const createElement = (
 };
 
 // Increment Decrement gallery heart
-export const incrementDecrement = (btn, mediaPhotographer, index) => {
+let idClicked = []; // save id clicked
+export const incrementDecrement = (mediaPhotographer, index) => {
   const likes = document.querySelectorAll('.gallery__likes');
   const btnLikes = document.querySelectorAll('.btn-likes');
 
-  let copyData = mediaPhotographer;
+  // Verify if id
+  let isCheckedId = idClicked.includes(mediaPhotographer[index].id);
 
-  if (!copyData[index].isLike) {
-    likes[index].textContent = copyData[index].likes + 1;
-    btnLikes[index].setAttribute('label', 'like');
+  let valueContent = likes[index].textContent;
 
-    copyData[index] = {
-      ...copyData[index],
-      likes: copyData[index].likes + 1,
-      isLike: true,
+  // if clicked
+  if (isCheckedId) {
+    // find id clicked
+    let findIndex = idClicked.indexOf(mediaPhotographer[index].id);
+    // remove id
+    idClicked.splice(findIndex, 1);
+
+    likes[index].textContent = parseInt(valueContent) - 1;
+    btnLikes[index].setAttribute('aria-label', 'like');
+
+    mediaPhotographer[index] = {
+      ...mediaPhotographer[index],
+      likes: parseInt(valueContent) - 1,
     };
   } else {
-    likes[index].textContent = copyData[index].likes - 1;
-    btnLikes[index].setAttribute('label', 'unlike');
-
-    copyData[index] = {
-      ...copyData[index],
-      likes: copyData[index].likes - 1,
-      isLike: false,
+    mediaPhotographer[index] = {
+      ...mediaPhotographer[index],
+      likes: mediaPhotographer[index].likes + 1,
     };
+
+    idClicked.push(mediaPhotographer[index].id);
+
+    likes[index].textContent = parseInt(valueContent) + 1;
+    btnLikes[index].setAttribute('aria-label', 'unlike');
   }
-  return copyData;
+
+  return mediaPhotographer;
 };
 
 // Dropdown sort
@@ -70,15 +87,24 @@ export const sortSelectForm = (optionText, mediaPhotographer) => {
 // Dropdown Open (active)
 export const onActiveDropdown = () => {
   const dropdown = document.querySelector('.dropdown');
-
   dropdown.addEventListener('keyup', (e) => {
     if (e.code === 'Enter') {
       dropdown.classList.toggle('active');
+      if (dropdown.classList.contains('active')) {
+        dropdown.setAttribute('aria-expanded', 'true');
+      } else {
+        dropdown.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 
   dropdown.addEventListener('click', () => {
     dropdown.classList.toggle('active');
+    if (dropdown.classList.contains('active')) {
+      dropdown.setAttribute('aria-expanded', 'true');
+    } else {
+      dropdown.setAttribute('aria-expanded', 'false');
+    }
   });
 };
 

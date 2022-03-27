@@ -2,16 +2,15 @@ import mediaFactory from '../factories/mediaFactory.js';
 import { createElement } from './utils.js';
 
 export const createLightboxModal = () => {
-  const createGallery = createElement(
+  const createLightBox = createElement(
     'section',
     ['modal-lightbox', 'modal-center'],
     null,
     null
   );
-  createGallery.setAttribute('aria-hidden', true);
-  createGallery.setAttribute('role', 'dialog');
-  createGallery.setAttribute('tabindex', '-1');
-  return createGallery;
+  createLightBox.setAttribute('aria-hidden', true);
+  createLightBox.setAttribute('role', 'dialog');
+  return createLightBox;
 };
 
 export const createContainerMedia = (modalLightbox) => {
@@ -21,6 +20,9 @@ export const createContainerMedia = (modalLightbox) => {
     null,
     modalLightbox
   );
+  containerMedia.setAttribute('role', 'dialog');
+  containerMedia.setAttribute('aria-label', 'image vue rapprochée');
+  containerMedia.setAttribute('tab-index', '0');
   return containerMedia;
 };
 
@@ -31,8 +33,8 @@ export const createBtnArrowRight = (modalLightbox) => {
     `<img src = 'assets/icons/arrowRight.svg' alt='arrow right'/>`,
     modalLightbox
   );
-  btnArrowRight.setAttribute('aria-label', 'Next image');
-  btnArrowRight.setAttribute('role', 'link');
+  btnArrowRight.setAttribute('aria-label', 'image suivante');
+  btnArrowRight.setAttribute('tabindex', '0');
 
   return btnArrowRight;
 };
@@ -44,8 +46,9 @@ export const createBtnArrowLeft = (modalLightbox) => {
     `<img src = 'assets/icons/arrowLeft.svg' alt='arrow left'/>`,
     modalLightbox
   );
-  btnArrowLeft.setAttribute('aria-label', 'Previous image');
-  btnArrowLeft.setAttribute('role', 'link');
+  btnArrowLeft.setAttribute('aria-label', 'image précédente');
+  btnArrowLeft.setAttribute('tabindex', '0');
+
   return btnArrowLeft;
 };
 
@@ -59,17 +62,4 @@ export const createBtnClose = (modalLightbox) => {
   btnClose.setAttribute('aria-label', 'Close dialog');
 
   return btnClose;
-};
-
-// Type media
-export const typeMediaGallery = (mediaPhotographer, firstName) => {
-  const gallerySection = document.querySelector('.gallery');
-
-  mediaPhotographer.forEach((gallery) => {
-    const mediaModel = mediaFactory(gallery);
-    const typeMedia = gallery.image
-      ? mediaModel.getPhotosGalleriesDOM(firstName)
-      : mediaModel.getVideoGalleriesDOM(firstName);
-    gallerySection.appendChild(typeMedia);
-  });
 };

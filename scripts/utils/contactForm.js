@@ -24,7 +24,7 @@ export const onClickKeyboardModal = () => {
   const btnOpenModal = document.querySelector('.contact_button');
   const btnCloseModal = document.querySelector('.modal__close');
   const form = document.querySelector('#btn-submit');
-  const input = document.querySelectorAll('.modal__value');
+  const inputs = document.querySelectorAll('.modal__value');
 
   const modal = document.getElementById('contact_modal');
 
@@ -36,7 +36,7 @@ export const onClickKeyboardModal = () => {
   // Open form modal keyboard
   btnOpenModal.addEventListener('keyup', (e) => {
     if (e.code === 'Enter') {
-      btnCloseModal.focus();
+      inputs[0].focus();
       modalAriaOpen(modal);
     }
 
@@ -62,8 +62,9 @@ export const onClickKeyboardModal = () => {
   // Form data user click
   form.addEventListener('click', (e) => {
     e.preventDefault();
-    input.forEach((element) => {
+    inputs.forEach((element) => {
       console.log(`${element.parentElement.innerText}: ${element.value}`);
+      element.value = '';
     });
   });
 

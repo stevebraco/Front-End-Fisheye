@@ -3,11 +3,44 @@ import mediaFactory from '../factories/mediaFactory.js';
 import { photographers, media } from '../API/api.js';
 import {
   createElement,
+  fetchIdUrl,
   incrementDecrement,
   onActiveDropdown,
   sortSelectForm,
 } from '../utils/utils.js';
-import { typeMediaGallery } from '../utils/elementLightbox.js';
+
+let newDataSort = [];
+
+// Button icon heart
+const buttonLikes = (mediaPhotographer) => {
+  const btnLikes = document.querySelectorAll('.btn-likes');
+  const likes = document.querySelector('.likes__total');
+
+  btnLikes.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      newDataSort = incrementDecrement(mediaPhotographer, index);
+
+      const totalLikes = newDataSort.reduce(
+        (prevValue, currentValue) => prevValue + currentValue.likes,
+        0
+      );
+      likes.textContent = totalLikes;
+    });
+  });
+};
+
+// Type media
+const typeMediaGallery = (mediaPhotographer, firstName) => {
+  const gallerySection = document.querySelector('.gallery');
+
+  mediaPhotographer.forEach((gallery) => {
+    const mediaModel = mediaFactory(gallery);
+    const typeMedia = gallery.image
+      ? mediaModel.getPhotosGalleriesDOM(firstName)
+      : mediaModel.getVideoGalleriesDOM(firstName);
+    gallerySection.appendChild(typeMedia);
+  });
+};
 
 // Display dropdown
 const displayDropDownSelect = () => {
@@ -26,15 +59,26 @@ const UpdateGalleryBySort = (
   firstName,
   price
 ) => {
-  // mediaPhotographer by sort
-  const sortMediaPhotographer = sortSelectForm(optionText, mediaPhotographer);
+  const lightboxModal = document.querySelector('.modal-lightbox');
+  let sortMediaPhotographer = [];
 
+  if (newDataSort.length > 1) {
+    // mediaPhotographer by sort
+    sortMediaPhotographer = sortSelectForm(optionText, newDataSort);
+  } else {
+    // mediaPhotographer by sort
+    sortMediaPhotographer = sortSelectForm(optionText, mediaPhotographer);
+  }
   // clear gallery
   const mediaModel = mediaFactory();
   mediaModel.clearGallerySection();
 
   // update type media
   typeMediaGallery(sortMediaPhotographer, firstName);
+
+  if (lightboxModal) {
+    lightboxModal.remove();
+  }
 
   // update lightbox
   displayLightBoxModal(sortMediaPhotographer);
@@ -54,8 +98,11 @@ const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
     // manipulation class select
     const isSelectedBySort = () => {
       input.value = value.innerText;
+      // Value selected in top
       let current = document.getElementsByClassName('selected')[0];
       current.classList.remove('selected');
+
+      // next value selected
       value.classList.add('selected');
     };
 
@@ -133,24 +180,6 @@ const displayGalleryMedia = (mediaPhotographer, photographer) => {
   );
 };
 
-// Button icon heart
-const buttonLikes = (mediaPhotographer, price) => {
-  const btnLikes = document.querySelectorAll('.btn-likes');
-  const likes = document.querySelector('.likes__total');
-
-  btnLikes.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const data = incrementDecrement(btn, mediaPhotographer, index);
-
-      const totalLikes = data.reduce(
-        (prevValue, currentValue) => prevValue + currentValue.likes,
-        0
-      );
-      likes.textContent = totalLikes;
-    });
-  });
-};
-
 // Diplay total likes / price
 const displayLikeAndPriceDOM = (mediaPhotographer, pricePhotographer) => {
   const main = document.querySelector('main');
@@ -163,33 +192,33 @@ const displayLikeAndPriceDOM = (mediaPhotographer, pricePhotographer) => {
 
 // Display Lightbox
 const displayLightBoxModal = (mediaPhotographer) => {
-  const main = document.querySelector('main');
+  const containerModal = document.querySelector('.modals');
 
   const mediaModel = mediaFactory(mediaPhotographer);
   const lightBoxDOM = mediaModel.getLightBoxModalDOM();
 
-  main.appendChild(lightBoxDOM);
+  containerModal.appendChild(lightBoxDOM);
 };
 
 const init = async () => {
   // Fetch id Url
-  let params = new URL(document.location).searchParams;
-  let id = parseInt(params.get('id'));
+  let id = fetchIdUrl();
 
   // find photographer with ID
   const findPhotographWithID = photographers.find(
-    (photographer) => photographer.id == id
+    (photographer) => photographer.id === id
   );
 
   // photograph's media
-  const mediaPhotographer = media.filter((media) => media.photographerId == id);
+  const mediaPhotographer = media.filter(
+    (media) => media.photographerId === id
+  );
 
   document.title = `Photographer ${findPhotographWithID.name}`;
 
   displayLikeAndPriceDOM(mediaPhotographer, findPhotographWithID.price);
   displayDropDownSelect();
   displayGalleryMedia(mediaPhotographer, findPhotographWithID);
-  // displayLightBoxModal(mediaPhotographer);
   UpdateDisplayDropdown(mediaPhotographer, findPhotographWithID);
 };
 
