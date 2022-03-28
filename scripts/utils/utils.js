@@ -87,13 +87,14 @@ export const sortSelectForm = (optionText, mediaPhotographer) => {
 // Dropdown Open (active)
 export const onActiveDropdown = () => {
   const dropdown = document.querySelector('.dropdown');
+  const textBox = document.querySelector('.textBox');
   dropdown.addEventListener('keyup', (e) => {
     if (e.code === 'Enter') {
       dropdown.classList.toggle('active');
       if (dropdown.classList.contains('active')) {
-        dropdown.setAttribute('aria-expanded', 'true');
+        textBox.setAttribute('aria-expanded', 'true');
       } else {
-        dropdown.setAttribute('aria-expanded', 'false');
+        textBox.setAttribute('aria-expanded', 'false');
       }
     }
   });
@@ -101,9 +102,9 @@ export const onActiveDropdown = () => {
   dropdown.addEventListener('click', () => {
     dropdown.classList.toggle('active');
     if (dropdown.classList.contains('active')) {
-      dropdown.setAttribute('aria-expanded', 'true');
+      textBox.setAttribute('aria-expanded', 'true');
     } else {
-      dropdown.setAttribute('aria-expanded', 'false');
+      textBox.setAttribute('aria-expanded', 'false');
     }
   });
 };

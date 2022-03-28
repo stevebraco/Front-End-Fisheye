@@ -16,12 +16,12 @@ const mediaFactory = (data) => {
   const getDropDownSelectDOM = () => {
     const filterForm = `
     <h3 class='dropdown__text' id="exp_elem">Trier par</h3>
-    <div  class="dropdown" tabindex='0' >
-    <input tabindex='-1' class="textBox" type="button" value='Popularité' placeholder="dropMenu" readonly aria-haspopup="listbox" aria-labelledby="exp_elem exp_button" id="exp_button"	 />
-    <div  class="option" id='sort' role='listbox' aria-labelledby="exp_elem" tabindex="-1" >
-    <div class="option-value selected" tabindex='0' role='option'>Popularité</div>
-    <div class="option-value" tabindex='0' role='option'>Date</div>
-    <div class="option-value" tabindex='0' role='option'>Titre</div>
+    <div class="dropdown" tabindex='-1' >
+    <input tabindex='0' class="textBox" type="button" value='Popularité' readonly aria-haspopup="listbox" aria-labelledby="exp_elem" id="exp_button" aria-expanded='false'	 />
+    <div  class="option" id='sort' role='listbox' aria-labelledby="exp_elem" tabindex="-1"  aria-activedescendant='sort_pop'>
+    <div class="option-value selected" tabindex='0' id='sort_pop' aria-selected="true" role='option'>Popularité</div>
+    <div class="option-value" tabindex='0' id='sort_dat'role='option'>Date</div>
+    <div class="option-value" tabindex='0' id='sort_tit' role='option'>Titre</div>
     </div>
     </div>
     `;

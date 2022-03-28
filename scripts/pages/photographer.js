@@ -86,6 +86,7 @@ const UpdateGalleryBySort = (
 };
 
 const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
+  const opt = document.querySelector('.option');
   const optValue = document.querySelectorAll('.option-value');
   const input = document.querySelector('.textBox');
   const firstName = findPhotographWithID.name.split(' ')[0];
@@ -99,9 +100,12 @@ const UpdateDisplayDropdown = (mediaPhotographer, findPhotographWithID) => {
       // Value selected in top
       let current = document.getElementsByClassName('selected')[0];
       current.classList.remove('selected');
+      current.removeAttribute('aria-selected');
 
       // next value selected
       value.classList.add('selected');
+      value.setAttribute('aria-selected', true);
+      opt.attributes[5].textContent = value.id;
     };
 
     // Event click
