@@ -76,9 +76,7 @@ const UpdateGalleryBySort = (
   // update type media
   typeMediaGallery(sortMediaPhotographer, firstName);
 
-  if (lightboxModal) {
-    lightboxModal.remove();
-  }
+  lightboxModal?.remove();
 
   // update lightbox
   displayLightBoxModal(sortMediaPhotographer);

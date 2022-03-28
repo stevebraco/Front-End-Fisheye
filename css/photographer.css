@@ -127,14 +127,12 @@ html {
 }
 
 *:focus {
-  border: 3px solid #901c1c;
-  outline: 0;
+  outline: 0.125rem solid #901c1c;
 }
 
 .btn-likes:focus,
 .btn-arrow:focus {
-  border: 3px solid #901c1c;
-  outline: 0;
+  outline: 0.125rem solid #901c1c;
 }
 
 #contact_modal {
@@ -445,6 +443,8 @@ textarea {
   width: 170px;
   height: 69px;
   outline: none;
+  background: #901c1c;
+  border-radius: 5px;
 }
 
 .dropdown::before {
@@ -486,15 +486,10 @@ textarea {
   font-family: 'DM Sans', sans-serif;
   font-size: 18px;
   border: none;
-  border-radius: 5px;
   padding: 0;
   padding: 0 10px;
-  background: #901c1c;
+  background: transparent;
   text-align: left;
-}
-
-.dropdown:focus input {
-  border: 1px solid #901c1c;
 }
 
 .dropdown .option {
@@ -519,7 +514,9 @@ textarea {
 }
 
 .dropdown .option div:hover,
-.dropdown .option div:focus {
+.dropdown .option div:focus,
+.dropdown:focus,
+input.textBox:focus {
   background: #db8876;
   color: #000000;
 }
