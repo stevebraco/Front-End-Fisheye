@@ -62,10 +62,20 @@ export const onClickKeyboardModal = () => {
   // Form data user click
   form.addEventListener('click', (e) => {
     e.preventDefault();
-    inputs.forEach((element) => {
-      console.log(`${element.parentElement.innerText}: ${element.value}`);
-      element.value = '';
+    let error = 0;
+    inputs.forEach((input) => {
+      if (input.value === '') error += 1;
     });
+
+    inputs.forEach((input) => {
+      if (!error) {
+        console.log(`${input.parentElement.innerText}: ${input.value}`);
+        input.value = '';
+      } else {
+        e.preventDefault();
+      }
+    });
+    modalAriaClose(modal);
   });
 
   // Form data user keyboard

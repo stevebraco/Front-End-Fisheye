@@ -50,7 +50,7 @@ const mediaFactory = (data) => {
       ['gallery__container-video'],
       `
     <figure class='gallery__figure'>
-    <video class='gallery__media' controls src='/assets/images/${name}/${data.video}'>
+    <video class='gallery__media'  src='/assets/images/${name}/${data.video}'>
     </figure>
     </video>
     <div class='gallery__content'>

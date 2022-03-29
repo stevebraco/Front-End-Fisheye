@@ -18,7 +18,7 @@ const buttonLikes = (mediaPhotographer) => {
 
   btnLikes.forEach((btn, index) => {
     btn.addEventListener('click', () => {
-      newDataSort = incrementDecrement(mediaPhotographer, index);
+      newDataSort = [...incrementDecrement(mediaPhotographer, index)];
 
       const totalLikes = newDataSort.reduce(
         (prevValue, currentValue) => prevValue + currentValue.likes,
