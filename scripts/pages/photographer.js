@@ -35,9 +35,7 @@ const typeMediaGallery = (mediaPhotographer, firstName) => {
 
   mediaPhotographer.forEach((gallery) => {
     const mediaModel = mediaFactory(gallery);
-    const typeMedia = gallery.image
-      ? mediaModel.getPhotosGalleriesDOM(firstName)
-      : mediaModel.getVideoGalleriesDOM(firstName);
+    const typeMedia = mediaModel.getTypeMedia(gallery.image, firstName);
     gallerySection.appendChild(typeMedia);
   });
 };

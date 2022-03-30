@@ -29,6 +29,14 @@ const mediaFactory = (data) => {
     return createElement('div', ['dropdown-container'], filterForm, null);
   };
 
+  const getTypeMedia = (type, name) => {
+    if (type) {
+      return getPhotosGalleriesDOM(name);
+    } else {
+      return getVideoGalleriesDOM(name);
+    }
+  };
+
   // image gallery
   const getPhotosGalleriesDOM = (name) => {
     const model = `
@@ -205,8 +213,9 @@ const mediaFactory = (data) => {
 
   return {
     getDropDownSelectDOM,
-    getPhotosGalleriesDOM,
     getVideoGalleriesDOM,
+    getPhotosGalleriesDOM,
+    getTypeMedia,
     getLikeAndPriceDOM,
     getLightBoxModalDOM,
     clearGallerySection,
