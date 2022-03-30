@@ -5,6 +5,7 @@ import {
   createContainerMedia,
   createLightboxModal,
 } from '../utils/elementLightbox.js';
+import { trapFocus } from '../utils/trapFocus.js';
 import {
   createElement,
   modalAriaClose,
@@ -50,7 +51,7 @@ const mediaFactory = (data) => {
       ['gallery__container-video'],
       `
     <figure class='gallery__figure'>
-    <video class='gallery__media'  src='/assets/images/${name}/${data.video}'>
+    <video tabindex='0' class='gallery__media'  src='/assets/images/${name}/${data.video}'>
     </figure>
     </video>
     <div class='gallery__content'>
@@ -84,12 +85,15 @@ const mediaFactory = (data) => {
     const galleries = document.querySelectorAll('.gallery__media');
 
     const lightboxModal = createLightboxModal();
+
     const containerMedia = createContainerMedia(lightboxModal);
 
     // Create button
     const btnClose = createBtnClose(lightboxModal);
     const btnArrowRight = createBtnArrowRight(lightboxModal);
     const btnArrowLeft = createBtnArrowLeft(lightboxModal);
+    const divFocus = createElement('div', ['trap-focus'], '', lightboxModal);
+    divFocus.setAttribute('tabindex', '0');
 
     // index Media
     let indexGallery;
@@ -114,7 +118,7 @@ const mediaFactory = (data) => {
       gallery.addEventListener('keyup', (event) => {
         if (event.code === 'Enter') {
           openLightboxModal();
-          btnArrowRight.focus();
+          trapFocus(lightboxModal);
         }
         onSliderKeyUp(event);
       });
@@ -148,7 +152,7 @@ const mediaFactory = (data) => {
 
         case 'Escape':
           modalAriaClose(lightboxModal);
-          imageFocus.focus();
+          trapFocus(lightboxModal, imageFocus).onClose();
           break;
       }
     };
@@ -175,7 +179,7 @@ const mediaFactory = (data) => {
     lightboxModal.addEventListener('keyup', (event) => {
       if (event.code === 'Escape') {
         modalAriaClose(lightboxModal);
-        imageFocus.focus();
+        trapFocus(lightboxModal, imageFocus).onClose();
       }
       onSliderKeyUp(event);
     });
@@ -183,7 +187,7 @@ const mediaFactory = (data) => {
     // Button Close Modal
     btnClose.addEventListener('click', () => {
       modalAriaClose(lightboxModal);
-      imageFocus.focus();
+      trapFocus(lightboxModal, imageFocus).onClose();
     });
 
     // Button direction

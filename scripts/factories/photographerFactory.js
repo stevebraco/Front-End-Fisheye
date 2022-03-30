@@ -47,7 +47,7 @@ function photographerFactory(photographer) {
 
   function getModalContactFormDOM() {
     const model = `
-    <div class="modal">
+    <div tabIndex="0" class="modal">
       <header>
         <h2 id="dialog1_label" >Contactez-moi <p class='modal__line'> ${photographer.name}</p></h2>
         <button aria-label='Close Contact form' class='modal__close'>
@@ -73,7 +73,9 @@ function photographerFactory(photographer) {
         </div>
         <button type='submit' id='btn-submit' class="btn" aria-label='Send'>Envoyer</button>
       </form>
-    </div>`;
+    </div>
+        <div tabIndex="0"></div>
+    `;
 
     return model;
   }

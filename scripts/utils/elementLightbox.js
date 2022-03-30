@@ -10,6 +10,7 @@ export const createLightboxModal = () => {
   );
   createLightBox.setAttribute('aria-hidden', true);
   createLightBox.setAttribute('role', 'dialog');
+  createLightBox.setAttribute('tabindex', '0');
   return createLightBox;
 };
 

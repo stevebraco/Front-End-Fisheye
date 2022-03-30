@@ -1,3 +1,4 @@
+import { trapFocus } from './trapFocus.js';
 import { modalAriaClose, modalAriaOpen } from './utils.js';
 
 const modal = document.getElementById('contact_modal');
@@ -31,31 +32,25 @@ export const onClickKeyboardModal = () => {
   // Open form modal Click
   btnOpenModal.addEventListener('click', () => {
     modalAriaOpen(modal);
+    trapFocus(modal, btnOpenModal);
   });
 
-  // Open form modal keyboard
+  // Open form trapFocus
   btnOpenModal.addEventListener('keyup', (e) => {
-    if (e.code === 'Enter') {
-      inputs[0].focus();
-      modalAriaOpen(modal);
-    }
-
-    if (e.code === 'Escape') {
-      modalAriaClose(modal);
-      btnOpenModal.focus();
-    }
+    if (e.code === 'Enter') trapFocus(modal, btnOpenModal);
   });
 
   // Close form modal Click
   btnCloseModal.addEventListener('click', () => {
     modalAriaClose(modal);
+    trapFocus(modal, btnOpenModal).onClose();
   });
 
   // Close form modal keyboard
   modal.addEventListener('keyup', (e) => {
     if (e.code === 'Escape') {
       modalAriaClose(modal);
-      btnOpenModal.focus();
+      trapFocus(modal, btnOpenModal).onClose();
     }
   });
 
@@ -75,14 +70,13 @@ export const onClickKeyboardModal = () => {
         e.preventDefault();
       }
     });
-    modalAriaClose(modal);
   });
 
   // Form data user keyboard
   form.addEventListener('keyup', (e) => {
     if (e.code === 'Enter') {
       modalAriaClose(modal);
-      btnOpenModal.focus();
+      trapFocus(modal, btnOpenModal).onClose();
     }
   });
 };
